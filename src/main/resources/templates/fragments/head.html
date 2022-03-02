@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	<!-- head 조각 -->
+	<head th:fragment="headFragment">
+		<meta charset="UTF-8">
+		<link rel="stylesheet" th:href="@{/css/main.css}">
+		
+		<!-- jquery 3.6.0 -->
+		<script type="text/javascript" th:src="@{/js/jquery-3.6.0.js}"></script>
+		
+		<!-- 사용자 정의 title -->
+		<th:block layout:fragment="customTitle"></th:block>
+		<!-- 사용자 정의 Css -->
+		<th:block layout:fragment="customCss"></th:block>
+		<!-- 사용자 정의 Script -->
+		<th:block layout:fragment="customScript"></th:block>
+	</head>
+
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/default}">
+	<!-- 사용자 정의 title -->
+	<th:block layout:fragment="customTitle">
+		<title th:text="${title}"></title>
+	</th:block>
+	
+	<!-- 사용자 정의 Script -->
+	<th:block layout:fragment="customScript">
+		<script>
+			$(function(){
+				$('#removeBtn').click(function(){
+					var confirmResult = confirm('정말로 탈퇴하시겠습니까?');
+					
+					if(confirmResult){
+						$('#removeForm').submit();
+					}
+				});
+			});
+		</script>	
+	</th:block>
+		
+	<th:block layout:fragment="customContents">
+		<form id="removeForm" th:action="@{/member/removeMember}" method="post" >
+			<table border="1">
+				<tbody>
+					<tr>
+						<td>회원아이디</td>
+						<td>
+							<input type="text" name="memberId" readonly th:value="${memberId}">
+						</td>
+					</tr>
+					<tr>
+						<td>회원비밀번호</td>
+						<td>
+							<input type="text" name="memberPw" >
+						</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="2">
+							<button id="removeBtn" type="button" style="width:100%; height:30px; line-height: 30px;" >회원탈퇴</button>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+			<div th:if="${not #strings.isEmpty(result)}">
+				<p th:text=${result} style="color:red;"></p>
+			</div>
+		</form>
+	</th:block>
+</html>

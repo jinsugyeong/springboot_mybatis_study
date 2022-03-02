@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<div id="header" th:fragment="headerFragment">
+		head.html<br>
+		상단메뉴<br><br>
+		실습용
+		<a th:href="@{/member/addMember}">01회원가입</a>
+		<!-- http://localhost/Member/memberList -->
+		<!-- http://localhost(== @{/})/member/memberList -->
+		<a th:href="@{/member/memberList}">02회원목록</a>
+		<a href="#">03상품등록</a>
+		<a href="#">04상품목록</a>
+		<br><br>복습용
+		<a th:href="@{/member2/addMember}">01회원가입</a>
+		<!-- http://localhost/Member/memberList -->
+		<!-- http://localhost(== @{/})/member/memberList -->
+		<a th:href="@{/member2/memberList}">02회원목록</a>
+		<a href="#">03상품등록</a>
+		<a href="#">04상품목록</a>
+	</div>
+</html>
