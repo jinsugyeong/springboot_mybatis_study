@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/default}">
+	<!-- 사용자 정의 title -->
+	<th:block layout:fragment="customTitle">
+		<title th:text="${title}"></title>
+	</th:block>
+	
+	<!-- 사용자 정의 Script -->
+	<th:block layout:fragment="customScript">
+		<script>
+			$(function(){
+				$('#removeBtn').click(function(){
+					var confirmResult = confirm('정말로 삭제하시겠습니까?');
+					
+					if(confirmResult){
+						$('#removeGoodsForm').submit();
+					}
+				});
+			});
+		</script>	
+	</th:block>
+		
+	<th:block layout:fragment="customContents">
+		<form id="removeGoodsForm" th:action="@{/goods/removeGoods}" method="post" >
+			<table border="1">
+				<tbody>
+					<tr>
+						<td><label for="goodsSellerId">판매자아이디</label></td>
+						<td>
+							<input type="hidden" name="goodsCode" th:value="${goodsCode}" >
+							<input type="text" name="member.memberId" id="goodsSellerId" th:value="${session.SID}" readonly="readonly" />
+						</td>
+					</tr>
+					<tr>
+						<td><label for="memberPw">판매자 비밀번호</label></td>
+						<td>
+							<input type="text" name="member.memberPw" id="memberPw">
+						</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="2">
+							<button id="removeBtn" type="button" style="width:100%; height:30px; line-height: 30px;" >상품삭제</button>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+			<div th:if="${not #strings.isEmpty(result)}">
+				<p th:text=${result} style="color:red;"></p>
+			</div>
+		</form>
+	</th:block>
+</html>

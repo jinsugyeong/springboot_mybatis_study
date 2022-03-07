@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/default}">
+	<!-- 사용자 정의 title -->
+	<th:block layout:fragment="customTitle">
+		<title th:text="${title}"></title>
+	</th:block>
+	
+	<th:block layout:fragment="customScript">
+		<script>
+			$(function(){
+				function validationCheck(data){
+					if(typeof data == 'undefined' || data == '' || data == null){
+						return false;
+					}
+					return true;
+				}
+				
+				$('#loginBtn').click(function(){
+					 
+					 var isSubmit = true;
+					 var inputObj = $('#loginForm').find('input');
+					 
+					 $.each(inputObj, function(){
+						 var inputId = $(this).attr('id');
+						 var inputLabel = $('label[for="'+ inputId +'"]').text();
+						 var inputData = $(this).val();
+						 var result = validationCheck(inputData);
+
+						 
+						 //사용자가 입력하지 않은 경우
+						 if(!result){
+							 alert(inputLabel + '을 입력해주세요.');
+							 $(this).focus();
+							 isSubmit = false;
+							 return false;
+						 }
+					 })
+						
+					if(isSubmit) $('#loginForm').submit();
+				});				
+			});
+		</script>	
+	</th:block>
+		
+	<th:block layout:fragment="customContents">
+		<form id="loginForm" th:action="@{/member/login}" method="post" >
+			<table border="1">
+				<tbody>
+					<tr>
+						<td><label for="memberId">회원아이디</label></td>
+						<td>
+							<input type="text" name="memberId" id="memberId">
+						</td>
+					</tr>
+					<tr>
+						<td><label for="memberPw">회원비밀번호</label></td>
+						<td>
+							<input type="text" name="memberPw" id="memberPw">
+						</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="2">
+							<button id="loginBtn" type="button" style="width:100%; height:30px; line-height: 30px;" >로그인</button>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+			<div th:if="${not #strings.isEmpty(result)}">
+				<p th:text=${result} style="color:red;"></p>
+			</div>
+		</form>
+	</th:block>
+</html>

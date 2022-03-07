@@ -14,6 +14,17 @@
 		<result column="m_reg_date" property="memberRegDate" />
 	</resultMap>
 	
+	<select id="login" resultMap="memberResultMap" parameterType="String">
+		SELECT
+			*
+		FROM
+			tb_member
+		WHERE
+			m_id = #{memberId}
+			AND
+			m_pw = #{memberPw};
+	</select>
+	
 	<delete id="removeMember" parameterType="String">
 		/*회원 삭제*/
 		DELETE

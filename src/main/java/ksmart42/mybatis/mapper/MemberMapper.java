@@ -44,5 +44,8 @@ public interface MemberMapper {
 	//회원 삭제
 	public void removeMember(String memberId);
 	
+	//로그인
+	public Member login(String memberId, String memberPw);
+	
 
 }

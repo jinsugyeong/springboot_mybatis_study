@@ -2,6 +2,8 @@ package ksmart42.mybatis.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -34,6 +36,58 @@ public class MemberController {
 		this.memberService = memberService;
 		this.memberMapper = memberMapper;
 	}
+	
+	/**
+	 * 로그아웃
+	 */
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/member/login";
+	}
+	
+	/**
+	 * 로그인
+	 */	
+	@GetMapping("/login")
+	public String login(Model model
+						, @RequestParam(value = "result", required = false) String result) {
+		
+		model.addAttribute("title", "회원로그인");
+		
+		if(result != null) model.addAttribute("result", result);
+		
+		return "member/login";
+	}
+	
+	@PostMapping("/login")
+	public String login(Member member, HttpSession session, RedirectAttributes reAttr) {
+	
+		String memberId = member.getMemberId();
+		String memberPw = member.getMemberPw();
+		
+		Member checkMember = memberMapper.selectMember(memberId);
+		
+		if(checkMember != null && checkMember.getMemberPw() != null && memberPw.equals(checkMember.getMemberPw())) {
+			//String sessionId = checkMember.getMemberId();
+			String sessionName = checkMember.getMemberName();
+			String sessionLevel = checkMember.getMemberLevel();
+			
+			session.setAttribute("SID", memberId);
+			session.setAttribute("SNAME", sessionName);
+			session.setAttribute("SLEVEL", sessionLevel);
+			
+			log.info("로그인 성공");
+			
+			return "redirect:/";
+		}
+		
+		reAttr.addAttribute("result", "등록된 회원이 없습니다.");
+		
+		return "redirect:/member/login";
+	}
+	
+	
 	/**
 	 * 회원탈퇴화면
 	 */
