@@ -15,4 +15,5 @@
   - <a href="https://everyday-com-eat.tistory.com/76" target="_blank">ID 중복 체크 Ajax 처리, 유효성 검사</a>
 - 회원 수정
 - 회원 삭제
-- 로그인
+- 로그인 인터셉트
+- 로그인 이력
